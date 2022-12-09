@@ -78,18 +78,10 @@ async function main(page) {
       //   event.target.parentNode.parentNode.dataset.id
       // );
       modalMovie(event);
-      showModal();
-      // render.lightBoxModal(data, markup.markupModal); //--------не трогать
+      
       localStorageServise(event);
     }
-
-    // --------------закрытие модалки------------------------//
-    refsModal.closeModalBtn.addEventListener('click', onClickCloseModalBtn, {
-      once: true,
-    });
-    function onClickCloseModalBtn(event) {
-      hideModal();
-    }
+    
   }
   Loading.remove();
 }
@@ -152,7 +144,6 @@ async function onInputSabmit(event) {
       //   event.target.parentNode.parentNode.dataset.id
       // );
       modalMovie(event);
-      showModal();
       // render.lightBoxModal(data, markup.markupModal); ///----- не трогать
 
       localStorageServise(event);
