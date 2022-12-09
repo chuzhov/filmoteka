@@ -33,7 +33,7 @@ import { ref } from './js/ref';
 import { markup } from './js/markup';
 import { render } from './js/render';
 import { request } from './js/requestAPI';
-import { shema } from './js/shema';
+import { scheme } from './js/scheme';
 import { refsModal, showModal, hideModal, modalMovie } from './js/modalMovie';
 import { localStorageList } from './js/localStorage';
 import { randomModal } from './js/randomModal';
