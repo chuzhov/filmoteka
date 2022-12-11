@@ -24,7 +24,10 @@ export const request = {
       );
       const { data } = response;
       return data;
-    } catch (error) {}
+    } catch (error) {
+      console.log("Error in popular: ", error.message);
+      console.error(error);
+    }
   },
 
   async genres() {
@@ -36,6 +39,7 @@ export const request = {
       const { data } = genres;
       return data;
     } catch (error) {
+      console.log("Error in genres: ", error.message);
       console.error(error);
     }
   },
@@ -48,7 +52,8 @@ export const request = {
       const { data } = response;
       return data;
     } catch (error) {
-      console.error(error);
+      console.log("Error in input: ", error.message);
+
     }
   },
 
@@ -65,7 +70,8 @@ export const request = {
       const { data } = response;
       return data;
     } catch (error) {
-      console.log('error', error);
+      console.log("Error in movie id request: ", error.message);
+
     } finally {
       Loading.remove();
     }

@@ -34,7 +34,7 @@ import { markup } from './js/markup';
 import { render } from './js/render';
 import { request } from './js/requestAPI';
 import { scheme } from './js/scheme';
-import { refsModal, showModal, hideModal, modalMovie } from './js/modalMovie';
+import { refsModal, modalMovie } from './js/modalMovie';
 import { localStorageList } from './js/localStorage';
 import { randomModal } from './js/randomModal';
 const pagination = new Pagination('pagination', options);
@@ -58,6 +58,7 @@ pagination.on('beforeMove', loadMorePopylarPhotos);
 
 //--------рендер популярных фильмов при загрузке-------------//
 main(page);
+
 async function main(page) {
   Loading.hourglass({
     clickToClose: true,
@@ -65,21 +66,27 @@ async function main(page) {
     svgColor: '#ff6b01',
   });
   render.clear();
+
+try {
   const data = await request.popular(page);
   const genres = await request.genres();
+} catch (error) {
+    console.log("Error in index.js: ", error.message);
+    console.error(error);
+}
+  
   pagination.reset(data.total_results);
   render.print(data, genres, markup.gallery);
   //---------------модалка при клике на карточку-------------//
   ref.gallery.addEventListener('click', onClickCardGallery);
+
   function onClickCardGallery(event) {
     event.preventDefault();
     if (event.target.nodeName === 'IMG') {
-      // const data = await request.movieId(
-      //   event.target.parentNode.parentNode.dataset.id
-      // );
+      
       modalMovie(event);
       
-      localStorageServise(event);
+      localStorageService(event);
     }
     
   }
@@ -115,6 +122,7 @@ async function onInputSabmit(event) {
     svgSize: '200px',
     svgColor: '#ff6b01',
   });
+
   render.clear();
   const data = await request.input();
   if (data.results.length === 0) {
@@ -123,6 +131,7 @@ async function onInputSabmit(event) {
     Loading.remove();
     return;
   }
+
   ref.errorString.classList.add('is-hidden');
   ref.pagination.classList.remove('is-hidden');
   const genres = await request.genres();
@@ -138,29 +147,28 @@ async function onInputSabmit(event) {
 
   //---------------модалка при клике на карточку-------------//
   ref.gallery.addEventListener('click', onClickCardGallery);
+
   function onClickCardGallery(event) {
     if (event.target.nodeName === 'IMG') {
-      // const data = await request.movieId(
-      //   event.target.parentNode.parentNode.dataset.id
-      // );
+      
       modalMovie(event);
-      // render.lightBoxModal(data, markup.markupModal); ///----- не трогать
 
-      localStorageServise(event);
+      localStorageService(event);
     }
   }
 }
+
 //------------------------------манипуляции с локал стореджем------------------//
-function localStorageServise(codeCardFilm) {
+function localStorageService(codeCardFilm) {
   //   //----сохраняем в просмотренные фильмы---------//
 
-  const lightBoxQueueBtn = document.querySelector(
-    '.basicLightbox  #add-to-queue'
-  );
+  const lightBoxQueueBtn = document.querySelector('.basicLightbox  #add-to-queue');
+
   (lightBoxQueueBtn || refsModal.btnQueue).addEventListener(
     'click',
     onQueueClick
   );
+
   function onQueueClick(event) {
     event.target.textContent = 'Added to Queue';
 
@@ -176,6 +184,7 @@ function localStorageServise(codeCardFilm) {
     'click',
     onAddClick
   );
+
   function onAddClick(event) {
     event.target.textContent = 'Added to Watched';
 

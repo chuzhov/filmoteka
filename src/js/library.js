@@ -52,7 +52,7 @@ async function onTargetClick(event) {
         svgColor: '#ff6b01',
       });
       showModal();
-      // render.lightBoxModal(data, markup.markupModal); //--------не трогать
+      
       const btns = document.querySelectorAll(
         '.movie-info__wrapper  .button-wrapper [type="button"]'
       );
